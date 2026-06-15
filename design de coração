@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coração LOVE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #0d0d0d;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Desenho do Coração */
+        .coracao {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: #ff2a74;
+            transform: rotate(-45deg);
+            box-shadow: 0 0 40px #ff2a74;
+            animation: pulsar 1.2s infinite alternate ease-in-out;
+            z-index: 2;
+        }
+
+        .coracao::before,
+        .coracao::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #ff2a74;
+            border-radius: 50%;
+        }
+
+        .coracao::before {
+            top: -50px;
+            left: 0;
+        }
+
+        .coracao::after {
+            top: 0;
+            left: 50px;
+        }
+
+        /* Animação de pulsação do coração */
+        @keyframes pulsar {
+            0% {
+                transform: rotate(-45deg) scale(1);
+            }
+            100% {
+                transform: rotate(-45deg) scale(1.15);
+            }
+        }
+
+        /* Anel de texto em volta */
+        .texto-relogio {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: rodar 15s linear infinite;
+            z-index: 1;
+        }
+
+        .texto-relogio span {
+            position: absolute;
+            left: 50%;
+            transform-origin: 0 150px; /* Alinha o raio da rotação */
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffbad2;
+            text-shadow: 0 0 10px #ff2a74;
+            text-transform: uppercase;
+        }
+
+        /* Animação de rotação do texto */
+        @keyframes rodar {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="coracao"></div>
+
+        <div class="texto-relogio" id="textoAmor"></div>
+    </div>
+
+    <script>
+        // Script para distribuir a palavra LOVE em círculo perfeitamente
+        const containerTexto = document.getElementById('textoAmor');
+        const palavra = "LOVE ";
+        const repeticoes = 12; // Quantidade de vezes que a palavra vai se repetir em volta do coração
+        const textoCompleto = palavra.repeat(repeticoes);
+        
+        const totalCaracteres = textoCompleto.length;
+        const anguloPorCaractere = 360 / totalCaracteres;
+
+        for (let i = 0; i < totalCaracteres; i++) {
+            const span = document.createElement('span');
+            span.innerText = textoCompleto[i];
+            // Aplica a rotação individual para cada letra formar o círculo
+            span.style.transform = `rotate(${i * anguloPorCaractere}deg)`;
+            containerTexto.appendChild(span);
+        }
+    </script>
+
+</body>
+</html>
