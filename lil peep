@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Aesthetics Wallpaper</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Courier+Prime:ital@0;1&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #030304;
+            font-family: 'Courier Prime', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Efeito de iluminação de fundo (Vibe Chase Atlantic & Chris Grey) */
+        .ambient-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(230, 0, 70, 0.1) 0%, rgba(10, 5, 15, 0.4) 50%, rgba(3, 3, 4, 1) 100%);
+            z-index: 1;
+        }
+
+        /* Container do Texto Central */
+        .content-container {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 80vw;
+            padding: 20px;
+            pointer-events: none; /* Não atrapalha cliques se usado como fundo */
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            letter-spacing: 12px;
+            color: #ffffff;
+            margin-bottom: 30px;
+            opacity: 0.4;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .lyric-display {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #e2e2e2;
+            font-style: italic;
+            min-height: 100px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            text-shadow: 0 0 8px rgba(255, 0, 100, 0.2);
+        }
+
+        .lyric-display.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Partículas / Estrelas (Vibe Lil Peep) */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+    <canvas id="starfield"></canvas>
+
+    <div class="content-container">
+        <h1>Midnight Transmission</h1>
+        <div id="lyrics" class="lyric-display">Loading echoes...</div>
+    </div>
+
+    <script>
+        // --- GERENCIADOR DE TEXTO (FRASES) ---
+        const frases = [
+            "Look at the sky tonight, all of the stars have a reason.",
+            "The water's getting colder now... Go on, let's take a swim.",
+            "Bother me, tell me awful things. You know I love it.",
+            "It's a cinematic tragedy, under the purple neon lights.",
+            "I know I'm not that important to you, but to me, you're so much more.",
+            "People talk too much, but they don't know enough.",
+            "Shadows dancing on the ceiling, slipping into the deep end."
+        ];
+
+        let index = 0;
+        const display = document.getElementById('lyrics');
+
+        function alternarFrases() {
+            display.classList.remove('active');
+            
+            setTimeout(() => {
+                display.innerText = frases[index];
+                display.classList.add('active');
+                index = (index + 1) % frases.length;
+            }, 1500); // Tempo de transição sumindo
+        }
+
+        // Muda a frase a cada 7 segundos
+        alternarFrases();
+        setInterval(alternarFrases, 7000);
+
+
+        // --- ANIMAÇÃO DO CANVAS (ESTRELAS/PARTÍCULAS) ---
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+
+        function redimensionar() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', redimensionar);
+        redimensionar();
+
+        const numEstrelas = 60;
+        const estrelas = [];
+
+        for (let i = 0; i < numEstrelas; i++) {
+            estrelas.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                tamanho: Math.random() * 2,
+                velocidade: Math.random() * 0.5 + 0.1,
+                opacidade: Math.random()
+            });
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            estrelas.forEach(estrela => {
+                ctx.beginPath();
+                // Cor mesclando entre branco e o rosa/vermelho característico
+                ctx.fillStyle = `rgba(255, 20, 100, ${estrela.opacidade})`;
+                ctx.arc(estrela.x, estrela.y, estrela.tamanho, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Movimento lento para baixo e para a esquerda
+                estrela.y += estrela.velocidade;
+                estrela.x -= estrela.velocidade * 0.3;
+
+                // Piscar sutil
+                estrela.opacidade += (Math.random() - 0.5) * 0.05;
+                if (estrela.opacidade < 0) estrela.opacidade = 0;
+                if (estrela.opacidade > 0.7) estrela.opacidade = 0.7;
+
+                // Reset se sair da tela
+                if (estrela.y > canvas.height) {
+                    estrela.y = 0;
+                    estrela.x = Math.random() * canvas.width;
+                }
+                if (estrela.x < 0) {
+                    estrela.x = canvas.width;
+                    estrela.y = Math.random() * canvas.height;
+                }
+            });
+
+            requestAnimationFrame(animar);
+        }
+        animar();
+    </script>
+</body>
+</html>
