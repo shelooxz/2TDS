@@ -1,0 +1,52 @@
+let carro = {
+    marca : "hyundai",
+    modelo : "azera",
+    ano : 2013
+};
+console.log (carro.marca);
+
+
+let aluno = {
+    nome: "Elijah",
+    idade: 17,
+    nota: 90
+};
+console.log (aluno.nome);
+console.log (aluno.nota);
+
+
+let produto = {
+    nome: "Monitor Gamer",
+    preco: 1200,
+    quantidade: 5
+};
+console.log("O produto " + produto.nome + " custa R$ " + produto.preco);
+
+
+let celular = {
+    marca: "Apple", 
+    bateria: 40
+};
+celular.bateria = 100;
+console.log (celular);
+
+
+const pessoa = {
+    nome: "Rebekah",
+    idade: 20
+};
+pessoa.cidade = "Nova Orleans";
+console.log (pessoa);
+
+
+const estudante  = {
+    nome: "Matheus",
+    nota: 7.5
+};
+if (estudante.nota >= 6) {
+    console.log (`${estudante.nome}está: Aprovado`);
+} else {
+    console.log(`${estudante.nome} está: Reprovado`);
+};
+
+
