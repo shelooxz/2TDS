@@ -1,0 +1,23 @@
+class funcionario {
+    constructor(nome, salario) {
+        this.nome = nome;
+        this.salario = salario;
+
+    }
+
+    trabalhar() {
+        console.log( "trabalhando..." ); 
+    }
+    exibirDados() {
+        console.log("Nome: " + this.nome);
+        console.log("Salario: " + this.salario);
+
+    }
+
+}
+
+class Gerente extends funcionario {
+    aprovarProjeto() {
+        console.log("projeto aprovado!");
+    }
+}
